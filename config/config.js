@@ -1,0 +1,17 @@
+import {config} from "dotenv"
+import { env } from "process"
+
+config()
+
+const env_config = {
+    project_env: process.env.PROJECT_ENV,
+    db_name: process.env.DB_NAME,
+    db_pass: process.env.DB_PASS,
+    db_host: process.env.DB_HOST,
+    db_port: process.env.DB_PORT,
+    port: process.env.PORT,
+    backend_url: process.env.BACKEND_URL,
+    jwt_secret: process.env.JWT_SECRET
+}
+
+export default env_config

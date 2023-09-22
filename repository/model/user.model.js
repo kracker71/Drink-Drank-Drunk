@@ -1,0 +1,19 @@
+export class User{
+    constructor(id,username,password,email,firstname,lastname,tel,table_id,access_key,refresh_key){
+        this.id = id
+        this.username = username
+        this.password = password
+        this.email = email
+        this.firstname = firstname
+        this.lastname = lastname
+        this.tel = tel
+        this.table_id = table_id
+        this.access_key = access_key
+        this.refresh_key = refresh_key
+
+    }
+}
+
+// module.exports = {
+//     User: User
+// }
