@@ -126,13 +126,15 @@ const UserController = {
         generateToken({
           username: user.username,
           id: user.id,
-          email: user.email
+          email: user.email,
+          role: user.role
         }),
         generateToken(
           {
             username: user.username,
             id:user.id,
-            email: user.email
+            email: user.email,
+            role: user.role
           },
           "refresh_token"
         )

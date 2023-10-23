@@ -17,6 +17,8 @@ const UserService = {
             new_user.tel = payload.tel
             new_user.created_at = new Date()
             new_user.updated_at = new Date()
+            new_user.role = payload.role
+            new_user.is_active = false
             let user = await userRepository.save(new_user)
             return user
         }catch(err){

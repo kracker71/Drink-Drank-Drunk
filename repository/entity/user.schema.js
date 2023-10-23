@@ -42,6 +42,12 @@ let UserSchemas = new EntitySchema({
         },
         updated_at:{
             type:"date"
+        },
+        role:{
+            type:"varchar"
+        },
+        is_active:{
+            type:"bool"
         }
     }
 })
