@@ -1,4 +1,5 @@
-const express = require("express");
+import express, { Express, Request, Response } from 'express';
+
 const morgan = require("morgan");
 const cors =  require("cors");
 const connectDB = require("../config/db");

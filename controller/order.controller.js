@@ -1,4 +1,4 @@
-const Order = require("../model/Order");
+const Order = require("../database/mongo/schema/order.schema");
 
 //@desc     Get all orders
 //@route    GET /api/v1/orders
