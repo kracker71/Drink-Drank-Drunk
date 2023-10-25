@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
-const appConfig = require("./config");
+import mongoose from 'mongoose';
+import appConfig from '../../config/config';
 
-const connectDB = async () => {
+export const mongoConnect = async () => {
   mongoose.set("strictQuery", true);
   const conn = await mongoose.connect(appConfig.MONGO_URI);
   console.log(`MongoDB connected: ${conn.connection.host}`);
 };
-
-module.exports = connectDB;

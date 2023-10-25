@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongo from "mongoose";
 
-const OrderSchema = new mongoose.Schema({
+const OrderSchema = new mongo.Schema({
     menuId: {
         type: Number,
         required: true,
@@ -38,4 +38,6 @@ const OrderSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("Order", OrderSchema);
+const OrderModel = mongo.model("Order", OrderSchema);
+
+export default OrderModel;

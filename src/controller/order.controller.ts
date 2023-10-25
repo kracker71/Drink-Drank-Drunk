@@ -1,9 +1,12 @@
+import { Request, Response, NextFunction } from 'express';
+import amqp from 'amqplib/callback_api';
+
 const Order = require("../database/mongo/schema/order.schema");
 
 //@desc     Get all orders
 //@route    GET /api/v1/orders
 //@access   Public
-exports.getOrders = async (req, res, next) => {
+export const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const orders = await Order.find();
     res.status(200).json({ success: true, count: orders.length, data: orders });
@@ -15,7 +18,7 @@ exports.getOrders = async (req, res, next) => {
 //@desc     Get single order
 //@route    GET /api/v1/orders/:id
 //@access   Public
-exports.getOrder = async (req, res, next) => {
+export const getOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const order = await Order.findById(req.params.id);
 
@@ -31,30 +34,34 @@ exports.getOrder = async (req, res, next) => {
 //@desc     Create new order
 //@routes   POST /api/v1/orders
 //@access   Public
-exports.createOrder = async (req, res, next) => {
+export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const order = await Order.create(req.body);
 
     const { orderType } = req.body; 
 
-    amqp
-      .connect("amqp://localhost")
-      .then((connection) => connection.createChannel())
-      .then((channel) => {
-        console.log("Channel is ready for use!");
+    amqp.connect("amqp://localhost", function (error0, connection) {
+      console.log("Connected");
+      if (error0) {
+        throw error0;
+      }
 
-        const exchange = "direct_logs";
+      connection.createChannel(function (error1, channel) {
+        if (error1) {
+          throw error1;
+        }
+
+        var exchange = "direct_logs";
+        var msg = JSON.stringify(req.body);
 
         channel.assertExchange(exchange, "direct", {
           durable: false,
         });
 
         channel.publish(exchange, orderType, Buffer.from(msg));
-        console.log(" [x] Sent %s: '%s'", orderType, msg);
-      })
-      .catch((error) => {
-        console.error("Error connecting to RabbitMQ", error);
+        console.log(" [RabbitMQ] Sent %s: '%s'", orderType, msg);
       });
+    });
 
     res.status(201).json({ success: true, data: order });
   } catch (err) {
@@ -65,7 +72,7 @@ exports.createOrder = async (req, res, next) => {
 //@desc     Update order
 //@routes   PUT /api/v1/orders/:id
 //@access   Public
-exports.updateOrder = async (req, res, next) => {
+export const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -85,7 +92,7 @@ exports.updateOrder = async (req, res, next) => {
 //@desc     Delete order
 //@routes   DELETE /api/v1/order/:id
 //@access   Public
-exports.deleteOrder = async (req, res, next) => {
+export const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const order = await Order.findById(req.params.id);
     if (!order) {
