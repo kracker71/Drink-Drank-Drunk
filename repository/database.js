@@ -7,11 +7,11 @@ console.log(`This server is run on ${env} environment`)
 
 const typeorm = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "chayut13097",
-    database: "ddd",
+    host: config.db_host,
+    port: config.db_port,
+    username: config.db_user,
+    password: config.db_pass,
+    database: config.db_name,
     synchronize: true,
     entities: [UserSchemas],
 })

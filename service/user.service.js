@@ -1,8 +1,7 @@
 import {User} from "../repository/model/user.model.js";
+import db from "../repository/database.js";
 
-import db from "../repository/database.js"
 const userRepository = db.typeorm.getRepository(User)
-
 
 const UserService = {
     async register(payload){

@@ -1,13 +1,13 @@
 import app from "./app.js"
 import config from "./config/config.js"
-import { SyncDatabase} from "./repository/database.js"
+import { SyncDatabase } from "./repository/database.js"
 
-main()
+main();
 
 async function main(){
-    await SyncDatabase()
+    await SyncDatabase();
 
-    app.listen(config.port || 3000, config.backend_url || "localhost", () =>
-        console.log(`🚀 Server has listening on ${config.backend_url || "localhost"}:${config.port || 3000}`)
+    app.listen(config.port || 8101, () =>
+        console.log(`🚀 Server has listening on ${config.backend_url || "localhost"}:${config.port || 8101}`)
     )
 }
